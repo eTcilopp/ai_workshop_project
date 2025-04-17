@@ -1,4 +1,6 @@
 .venv/
+images/defective/*
+images/good/*
 # Django #
 *.log
 *.pot
