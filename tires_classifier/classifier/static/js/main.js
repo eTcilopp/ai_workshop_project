@@ -49,11 +49,16 @@ document.getElementById('captureImage').addEventListener('click', () => {
 document.getElementById('fileInput').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            uploadImage(e.target.result);
-        };
-        reader.readAsDataURL(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        fetch('/upload/', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => handleResponse(data))
+        .catch(error => handleError(error));
     }
 });
 
@@ -67,18 +72,24 @@ function uploadImage(imageData) {
         body: formData
     })
     .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('result').innerHTML =
-                `<h3>Classification Result:</h3><p>${data.result}</p>`;
-        } else {
-            document.getElementById('result').innerHTML =
-                `<p style="color: red;">Error: ${data.error}</p>`;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('result').innerHTML =
-            `<p style="color: red;">Error uploading image</p>`;
-    });
+    .then(data => handleResponse(data))
+    .catch(error => handleError(error));
+}
+
+function handleResponse(data) {
+    if (data.success) {
+        document.getElementById('result').innerHTML = `
+            <h3>Classification Result:</h3>
+            <img src="${data.image_url}" style="max-width: 100%; margin-bottom: 20px;">
+            <p>${data.result}</p>
+        `;
+    } else {
+        handleError(data.error);
+    }
+}
+
+function handleError(error) {
+    console.error('Error:', error);
+    document.getElementById('result').innerHTML =
+        `<p style="color: red;">Error: ${error}</p>`;
 }
