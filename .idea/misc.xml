@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="/usr/bin/python3.10" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="/usr/bin/python3.10" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="/home/git_projects/ai_workshop_project/.venv/bin/python" project-jdk-type="Python SDK" />
 </project>

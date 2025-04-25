@@ -140,3 +140,9 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history.idea/
 .idea/
+.idea/*
+*.iml
+*.ipr
+bootstrap/*
+bootstrap/
+bootstrap
